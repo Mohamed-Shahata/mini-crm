@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
-@theme{
-    
+@theme {
+  --color-primary: #5b5fef;
+  --color-secondary: #14B8A6;
+  --color-success: #35c48b;
+  --color-danger: #ef5350;
+  --color-warning: #f5c84c;
+  --color-background: #f8f9fc;
+  --color-text: #1f2340;
+  --color-button: #5B5FEF
+}
+
+.container{
+    padding-inline: 12px;
+    margin-inline: auto;
+}
+
+button{
+    cursor: pointer;
 }
