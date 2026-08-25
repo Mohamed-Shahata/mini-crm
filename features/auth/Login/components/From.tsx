@@ -1,4 +1,3 @@
-import { toast } from "react-toastify";
 import useController from "../hooks/useController";
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
@@ -20,7 +19,6 @@ export default function From() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <EmailInput register={register} error={errors.email} />
 
-
       <PasswordInput
         error={errors.password}
         register={register}
@@ -35,8 +33,6 @@ export default function From() {
         isLoading={isLoadingLogin}
         loadingTitle="Logging in..."
       />
-
-      
     </form>
   );
 }

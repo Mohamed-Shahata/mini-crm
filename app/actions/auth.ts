@@ -10,7 +10,7 @@ export async function login(formData: FormData) {
 
   const supabase = await createClient();
 
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
@@ -19,7 +19,22 @@ export async function login(formData: FormData) {
     throw new Error(error.message);
   }
 
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("first_login")
+    .eq("id", data.user.id)
+    .single();
+
+  if (profileError) {
+    throw new Error(profileError.message);
+  }
+
   revalidatePath("/", "layout");
+
+  if (profile.first_login) {
+    redirect("/complete-profile");
+  }
+
   redirect("/dashboard");
 }
 
