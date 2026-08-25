@@ -1,9 +1,9 @@
-// "use client"
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import QueryProvider from "@/components/providers/QueryProvider";
+import { UserProvider } from "@/contexts/UserContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +25,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-
   return (
     <html
       lang="en"
@@ -33,8 +32,10 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <QueryProvider>
-          <ToastContainer position="top-center" />
-          {children}
+          <UserProvider>
+            <ToastContainer position="top-center" />
+            {children}
+          </UserProvider>
         </QueryProvider>
       </body>
     </html>
