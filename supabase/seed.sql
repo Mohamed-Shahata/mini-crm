@@ -52,7 +52,9 @@ values (
 -- Create profile
 insert into public.profiles (
   id,
-  full_name,
+  first_name,
+  last_name,
+  phone,
   role,
   department,
   is_active,
@@ -60,7 +62,9 @@ insert into public.profiles (
 )
 values (
   '11111111-1111-1111-1111-111111111111',
-  'Mohamed Shehata',
+  'Mohamed',
+  'Shehata',
+  '+201000000000',
   'admin',
   'full_stack',
   true,
