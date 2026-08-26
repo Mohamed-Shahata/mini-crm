@@ -18,9 +18,11 @@ config({ path: ".env.local" });
 // Edit these values each time you need to create a user
 // ============================================
 const NEW_USER = {
-  email: "employee@mini-crm.com",
+  email: "employee1@mini-crm.com",
   password: "TempPass123!",
-  fullName: "Ahmed Test",
+  firstName: "Ahmed",
+  lastName: "Test",
+  phone: "+201000000000",
   role: "member" as "admin" | "manager" | "member",
   department: "frontend" as
     | "marketing"
@@ -70,7 +72,9 @@ async function main() {
 
   const { error: profileError } = await supabaseAdmin.from("profiles").insert({
     id: newUserId,
-    full_name: NEW_USER.fullName,
+    first_name: NEW_USER.firstName,
+    last_name: NEW_USER.lastName,
+    phone: NEW_USER.phone,
     role: NEW_USER.role,
     department: NEW_USER.department,
     is_active: true,
@@ -90,7 +94,9 @@ async function main() {
     id: newUserId,
     email: NEW_USER.email,
     password: NEW_USER.password,
-    full_name: NEW_USER.fullName,
+    first_name: NEW_USER.firstName,
+    last_name: NEW_USER.lastName,
+    phone: NEW_USER.phone,
     role: NEW_USER.role,
     department: NEW_USER.department,
   });

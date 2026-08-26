@@ -10,9 +10,12 @@ export type Role = "admin" | "manager" | "member";
 
 export type CurrentUser = {
   uid: string;
-  name: string;
+  firstName: string;
+  lastName: string;
+  email: string;
   role: Role;
   department: Department;
+  phone: string | null;
 };
 
 export type UserContextValue = {
