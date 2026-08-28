@@ -11,12 +11,14 @@ export default function Form() {
     setShowPassword,
     onSubmit,
     isLoadingSetPassword,
+    showConfirmPassword,
+    setShowConfirmPassword,
   } = useController();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <PasswordField
-        label="Password"
+        label="Password*"
         fieldName="password"
         error={errors.password}
         register={register}
@@ -26,12 +28,12 @@ export default function Form() {
 
       <div className="mt-3">
         <PasswordField
-          label="Confirm Password"
+          label="Confirm Password*"
           fieldName="confirmPassword"
           error={errors.confirmPassword}
           register={register}
-          showPassword={showPassword}
-          setShowPassword={setShowPassword}
+          showPassword={showConfirmPassword}
+          setShowPassword={setShowConfirmPassword}
         />
       </div>
 
