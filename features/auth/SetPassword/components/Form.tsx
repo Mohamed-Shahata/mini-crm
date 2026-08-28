@@ -24,14 +24,21 @@ export default function Form() {
         setShowPassword={setShowPassword}
       />
 
-      <PasswordField
-        label="Confirm Password"
-        fieldName="confirmPassword"
-        error={errors.confirmPassword}
-        register={register}
-        showPassword={showPassword}
-        setShowPassword={setShowPassword}
-      />
+      <div className="mt-3">
+        <PasswordField
+          label="Confirm Password"
+          fieldName="confirmPassword"
+          error={errors.confirmPassword}
+          register={register}
+          showPassword={showPassword}
+          setShowPassword={setShowPassword}
+        />
+      </div>
+
+      <p className="text-sm text-[#8F8F8F] font-normal mt-3 mb-11">
+        Password requirements : At least 8 characters , One uppercase letter
+        ,One number, One special character
+      </p>
 
       <Button
         title="Set Password"
