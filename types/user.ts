@@ -16,6 +16,8 @@ export type CurrentUser = {
   role: Role;
   department: Department;
   phone: string | null;
+  age: number | null;
+  avatarUrl: string | null;
 };
 
 export type UserContextValue = {
