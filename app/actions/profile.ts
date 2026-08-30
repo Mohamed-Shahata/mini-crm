@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { completeProfileSchema } from "@/lib/validations/profile";
+import { validateAvatarFile, replaceAvatarFile } from "@/lib/storage/avatar";
 
 export async function getCurrentUserContext() {
   const supabase = await createClient();
@@ -18,7 +19,9 @@ export async function getCurrentUserContext() {
 
   const { data, error } = await supabase
     .from("profiles")
-    .select("id, first_name, last_name, role, department, phone")
+    .select(
+      "id, first_name, last_name, role, department, phone, age, avatar_url",
+    )
     .eq("id", user.id)
     .single();
 
@@ -34,6 +37,8 @@ export async function getCurrentUserContext() {
     role: data.role,
     department: data.department,
     phone: data.phone,
+    age: data.age,
+    avatarUrl: data.avatar_url,
   };
 }
 
@@ -76,13 +81,30 @@ export async function completeProfile(formData: FormData) {
     firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
     phone: formData.get("phone"),
+    age: formData.get("age"),
   });
 
   if (!parsed.success) {
     throw new Error(parsed.error.issues[0]?.message ?? "Invalid data");
   }
 
-  const { firstName, lastName, phone } = parsed.data;
+  const { firstName, lastName, phone, age } = parsed.data;
+
+  // Avatar is optional on complete-profile — only validate/upload if provided.
+  const avatar = formData.get("avatar");
+  let avatarUrl: string | null = null;
+  let uploadedFilePath: string | null = null;
+
+  if (avatar && avatar instanceof File && avatar.size > 0) {
+    const validationError = validateAvatarFile(avatar);
+    if (validationError) {
+      throw new Error(validationError);
+    }
+
+    const uploaded = await replaceAvatarFile(supabase, user.id, avatar);
+    avatarUrl = uploaded.publicUrl;
+    uploadedFilePath = uploaded.filePath;
+  }
 
   const { error } = await supabase
     .from("profiles")
@@ -90,11 +112,16 @@ export async function completeProfile(formData: FormData) {
       first_name: firstName,
       last_name: lastName,
       phone,
+      age,
+      ...(avatarUrl ? { avatar_url: avatarUrl } : {}),
       first_login: false,
     })
     .eq("id", user.id);
 
   if (error) {
+    if (uploadedFilePath) {
+      await supabase.storage.from("avatars").remove([uploadedFilePath]);
+    }
     throw new Error(error.message);
   }
 
