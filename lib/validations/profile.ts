@@ -24,4 +24,5 @@ export const completeProfileSchema = z.object({
     .max(100, "Age must be at most 100"),
 });
 
-export type CompleteProfileInput = z.infer<typeof completeProfileSchema>;
+export type CompleteProfileInput = z.input<typeof completeProfileSchema>;
+export type CompleteProfileOutput = z.output<typeof completeProfileSchema>;

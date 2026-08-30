@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { completeProfileSchema } from "../schema";
 import { InputsFormCompleteProfile } from "../types";
+import { CompleteProfileOutput } from "@/lib/validations/profile";
 import useCompleteProfile from "./useCompleteProfile";
 import { toast } from "react-toastify";
 
@@ -20,7 +21,7 @@ export default function useController() {
     isPending: isLoadingCompleteProfile,
   } = useCompleteProfile();
 
-  const onSubmit = async (data: InputsFormCompleteProfile) => {
+  const onSubmit = async (data: CompleteProfileOutput) => {
     const { firstName, lastName, phone } = data;
     const form = new FormData();
     form.append("firstName", firstName);
