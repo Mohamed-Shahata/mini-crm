@@ -32,6 +32,7 @@ export default function useController() {
   };
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return {
     register,
@@ -40,6 +41,8 @@ export default function useController() {
     showPassword,
     setShowPassword,
     onSubmit,
+    showConfirmPassword,
+    setShowConfirmPassword,
     isLoadingSetPassword,
   };
 }

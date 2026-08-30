@@ -20,7 +20,7 @@ export default function PasswordField({
   return (
     <div>
       <fieldset
-        className={`rounded-sm border ${error ? "border-danger animate-pulse" : "border-gray-400"}  py-2 w-full `}
+        className={`rounded-sm border ${error ? "border-danger animate-pulse" : "border-[#CCCDFA]"}  py-2 w-full `}
       >
         <legend
           className={`text-sm font-medium text-start ml-4 ${error ? "bg-danger/20 text-danger" : "bg-button/20 text-primary "} rounded-md px-2 py-1`}
